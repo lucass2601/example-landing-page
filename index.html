@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tournal - Create & Manage Tournaments With Ease</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: ["class"],
+        theme: {
+          container: {
+            center: true,
+            padding: "2rem",
+            screens: {
+              "2xl": "1400px",
+            },
+          },
+          extend: {
+            colors: {
+              border: "hsl(var(--border))",
+              input: "hsl(var(--input))",
+              ring: "hsl(var(--ring))",
+              background: "hsl(var(--background))",
+              foreground: "hsl(var(--foreground))",
+              primary: {
+                DEFAULT: "hsl(var(--primary))",
+                foreground: "hsl(var(--primary-foreground))",
+              },
+              secondary: {
+                DEFAULT: "hsl(var(--secondary))",
+                foreground: "hsl(var(--secondary-foreground))",
+              },
+              destructive: {
+                DEFAULT: "hsl(var(--destructive))",
+                foreground: "hsl(var(--destructive-foreground))",
+              },
+              muted: {
+                DEFAULT: "hsl(var(--muted))",
+                foreground: "hsl(var(--muted-foreground))",
+              },
+              accent: {
+                DEFAULT: "hsl(var(--accent))",
+                foreground: "hsl(var(--accent-foreground))",
+              },
+              popover: {
+                DEFAULT: "hsl(var(--popover))",
+                foreground: "hsl(var(--popover-foreground))",
+              },
+              card: {
+                DEFAULT: "hsl(var(--card))",
+                foreground: "hsl(var(--card-foreground))",
+              },
+            },
+            borderRadius: {
+              lg: "var(--radius)",
+              md: "calc(var(--radius) - 2px)",
+              sm: "calc(var(--radius) - 4px)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        --background: 0 0% 100%;
+        --foreground: 222.2 84% 4.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 84% 4.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 84% 4.9%;
+        --primary: 263 80% 60%;
+        --primary-foreground: 210 40% 98%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 221.2 83.2% 53.3%;
+        --radius: 0.5rem;
+      }
+
+      .dark {
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 263 80% 60%;
+        --primary-foreground: 222.2 47.4% 11.2%;
+        --secondary: 217.2 32.6% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 224.3 76.3% 48%;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <header
+      class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    >
+      <div class="container flex items-center h-16">
+        <div class="flex items-center mr-4">
+          <span class="text-xl font-bold">tournal</span>
+        </div>
+        <nav class="flex gap-4 ml-auto sm:gap-6">
+          <a href="#discord" class="text-sm font-medium hover:underline">
+            Join Discord
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="container py-12 space-y-6 md:py-24 lg:py-32">
+        <div
+          class="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center"
+        >
+          <h1
+            class="font-heading text-3xl font-bold leading-[1.1] sm:text-4xl md:text-5xl"
+          >
+            Create & Manage Tournaments
+            <span class="text-primary"> With Ease</span>
+          </h1>
+          <p
+            class="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8"
+          >
+            The mobile app for organizing and managing tournaments. Coming soon
+            to iOS and Android.
+          </p>
+          <div class="flex flex-col gap-4 sm:flex-row">
+            <a
+              href="#discord"
+              class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md shadow bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring h-11"
+            >
+              Join Our Community
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-4 h-4 ml-2"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="container py-12 md:py-24 lg:py-32">
+        <div
+          class="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3"
+        >
+          <!-- Feature Card 1 -->
+          <div
+            class="flex flex-col items-center text-center border rounded-lg shadow bg-card text-card-foreground"
+          >
+            <div class="flex flex-col space-y-1.5 p-6 items-center">
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-2 rounded-full bg-primary/10"
+              >
+                <div class="text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path
+                      d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"
+                    ></path>
+                    <path
+                      d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"
+                    ></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="text-2xl font-semibold tracking-tight">
+                Tournament Creation
+              </h3>
+            </div>
+            <div class="p-6 pt-0">
+              <p class="text-sm text-muted-foreground">
+                Create tournaments with round-robin or league formats in
+                minutes.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature Card 2 -->
+          <div
+            class="flex flex-col items-center text-center border rounded-lg shadow bg-card text-card-foreground"
+          >
+            <div class="flex flex-col space-y-1.5 p-6 items-center">
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-2 rounded-full bg-primary/10"
+              >
+                <div class="text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="text-2xl font-semibold tracking-tight">
+                Team Management
+              </h3>
+            </div>
+            <div class="p-6 pt-0">
+              <p class="text-sm text-muted-foreground">
+                Easily manage participants, teams, and registrations with
+                automated tools.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature Card 3 -->
+          <div
+            class="flex flex-col items-center text-center border rounded-lg shadow bg-card text-card-foreground"
+          >
+            <div class="flex flex-col space-y-1.5 p-6 items-center">
+              <div
+                class="flex items-center justify-center w-12 h-12 mb-2 rounded-full bg-primary/10"
+              >
+                <div class="text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect
+                      width="18"
+                      height="18"
+                      x="3"
+                      y="4"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <line x1="16" x2="16" y1="2" y2="6"></line>
+                    <line x1="8" x2="8" y1="2" y2="6"></line>
+                    <line x1="3" x2="21" y1="10" y2="10"></line>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="text-2xl font-semibold tracking-tight">Scheduling</h3>
+            </div>
+            <div class="p-6 pt-0">
+              <p class="text-sm text-muted-foreground">
+                Automatic or manual scheduling with conflict detection.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="discord" class="py-12 bg-muted md:py-24 lg:py-32">
+        <div class="container px-4 mx-auto">
+          <div class="mx-auto max-w-[58rem] text-center">
+            <h2
+              class="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-4xl"
+            >
+              Join Our Community
+            </h2>
+            <p class="mt-4 text-muted-foreground">
+              Connect with other tournament organizers and get exclusive
+              updates.
+            </p>
+            <div class="flex justify-center mx-auto mt-8">
+              <a
+                href="https://discord.gg/EWkRwSCzMP"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md shadow bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring h-11"
+              >
+                Join Discord
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="py-6 border-t md:py-0">
+      <div
+        class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row"
+      >
+        <div class="flex items-center gap-4 text-sm text-muted-foreground">
+          <a href="legal.html" class="hover:underline"> Legal Notice </a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
