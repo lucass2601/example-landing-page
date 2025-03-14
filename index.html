@@ -110,7 +110,191 @@
       html {
         scroll-behavior: smooth;
       }
+
+      /* Language dropdown styles */
+      .language-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .language-dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        min-width: 160px;
+        z-index: 100;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: 1px solid hsl(var(--border));
+        background-color: hsl(var(--background));
+      }
+
+      .language-dropdown-content.show {
+        display: block;
+      }
+
+      .language-option {
+        display: flex;
+        align-items: center;
+        padding: 10px 16px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .language-option:hover {
+        background-color: hsl(var(--accent));
+      }
+
+      .language-option.active {
+        background-color: hsl(var(--accent));
+        font-weight: 500;
+      }
+
+      .flag-icon {
+        width: 20px;
+        height: 15px;
+        margin-right: 8px;
+        border-radius: 2px;
+        object-fit: cover;
+      }
     </style>
+    <script>
+      // Language translations
+      const translations = {
+        en: {
+          joinDiscord: "Join Discord",
+          createManage: "Create & Manage Tournaments",
+          withEase: "With Ease",
+          appDescription:
+            "The mobile app for organizing and managing tournaments. Coming soon to iOS and Android.",
+          joinCommunity: "Join Our Community",
+          tournamentCreation: "Tournament Creation",
+          tournamentCreationDesc:
+            "Create tournaments with round-robin or league formats in minutes.",
+          teamManagement: "Team Management",
+          teamManagementDesc:
+            "Easily manage participants, teams, and registrations with automated tools.",
+          scheduling: "Scheduling",
+          schedulingDesc:
+            "Automatic or manual scheduling with conflict detection.",
+          joinOurCommunity: "Join Our Community",
+          communityDesc:
+            "Connect with other tournament organizers and get exclusive updates.",
+          legalNotice: "Legal Notice",
+          backToHome: "Back to Home",
+          english: "English",
+          german: "German",
+        },
+        de: {
+          joinDiscord: "Discord beitreten",
+          createManage: "Turniere erstellen & verwalten",
+          withEase: "mit Leichtigkeit",
+          appDescription:
+            "Die mobile App zum Organisieren und Verwalten von Turnieren. Bald verfügbar für iOS und Android.",
+          joinCommunity: "Tritt unserer Community bei",
+          tournamentCreation: "Turniererstellung",
+          tournamentCreationDesc:
+            "Erstelle Turniere mit Jeder-gegen-jeden- oder Ligaformaten in Minuten.",
+          teamManagement: "Team-Management",
+          teamManagementDesc: "Verwalte Teilnehmer, Teams.",
+          scheduling: "Terminplanung",
+          schedulingDesc:
+            "Automatische oder manuelle Terminplanung mit Konflikterkennung.",
+          joinOurCommunity: "Tritt unserer Community bei",
+          communityDesc:
+            "Verbinde dich mit anderen Turnierorganisatoren und erhalte exklusive Updates.",
+          legalNotice: "Impressum",
+          backToHome: "Zurück zur Startseite",
+          english: "Englisch",
+          german: "Deutsch",
+        },
+      };
+
+      // Language metadata
+      const languages = {
+        en: {
+          name: "English",
+          flag: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjM1IDY1MCIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KPGRlZnM+DQo8ZyBpZD0idW5pb24iPg0KPHVzZSB5PSItLjIxNiIgeGxpbms6aHJlZj0iI3g0Ii8+DQo8dXNlIHhsaW5rOmhyZWY9IiN4NCIvPg0KPHVzZSB5PSIuMjE2IiB4bGluazpocmVmPSIjczYiLz4NCjwvZz4NCjxnIGlkPSJ4NCI+DQo8dXNlIHhsaW5rOmhyZWY9IiNzNiIvPg0KPHVzZSB5PSIuMDU0IiB4bGluazpocmVmPSIjczUiLz4NCjx1c2UgeT0iLjEwOCIgeGxpbms6aHJlZj0iI3M2Ii8+DQo8dXNlIHk9Ii4xNjIiIHhsaW5rOmhyZWY9IiNzNSIvPg0KPC9nPg0KPGcgaWQ9InM1Ij4NCjx1c2UgeD0iLS4yNTIiIHhsaW5rOmhyZWY9IiNzdGFyIi8+DQo8dXNlIHg9Ii0uMTI2IiB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4PSIuMTI2IiB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4PSIuMjUyIiB4bGluazpocmVmPSIjc3RhciIvPg0KPC9nPg0KPGcgaWQ9InM2Ij4NCjx1c2UgeD0iLS4wNjMiIHhsaW5rOmhyZWY9IiNzNSIvPg0KPHVzZSB4PSIuMzE1IiB4bGluazpocmVmPSIjc3RhciIvPg0KPC9nPg0KPGcgaWQ9InN0YXIiPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0ibWF0cml4KC0uODA5MDIgLS41ODc3OSAuNTg3NzkgLS44MDkwMiAwIDApIi8+DQo8dXNlIHhsaW5rOmhyZWY9IiNwdCIgdHJhbnNmb3JtPSJtYXRyaXgoLjMwOTAyIC0uOTUxMDYgLjk1MTA2IC4zMDkwMiAwIDApIi8+DQo8dXNlIHhsaW5rOmhyZWY9IiNwdCIvPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0icm90YXRlKDcyKSIvPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0icm90YXRlKDE0NCkiLz4NCjwvZz4NCjxwYXRoIGZpbGw9IiNmZmYiIGlkPSJwdCIgZD0iTS0uMTYyNSwwIDAtLjUgLjE2MjUsMHoiIHRyYW5zZm9ybT0ic2NhbGUoLjA2MTYpIi8+DQo8cGF0aCBmaWxsPSIjYmYwYTMwIiBpZD0ic3RyaXBlIiBkPSJtMCwwaDEyMzV2NTBoLTEyMzV6Ii8+DQo8L2RlZnM+DQo8cGF0aCBmaWxsPSIjZmZmIiBkPSJtMCwwaDEyMzV2NjUwaC0xMjM1eiIvPg0KPHVzZSB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8dXNlIHk9IjEwMCIgeGxpbms6aHJlZj0iI3N0cmlwZSIvPg0KPHVzZSB5PSIyMDAiIHhsaW5rOmhyZWY9IiNzdHJpcGUiLz4NCjx1c2UgeT0iMzAwIiB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8dXNlIHk9IjQwMCIgeGxpbms6aHJlZj0iI3N0cmlwZSIvPg0KPHVzZSB5PSI1MDAiIHhsaW5rOmhyZWY9IiNzdHJpcGUiLz4NCjx1c2UgeT0iNjAwIiB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8cGF0aCBmaWxsPSIjMDAyODY4IiBkPSJtMCwwaDQ5NHYzNTBoLTQ5NHoiLz4NCjx1c2UgeGxpbms6aHJlZj0iI3VuaW9uIiB0cmFuc2Zvcm09Im1hdHJpeCg2NTAgMCAwIDY1MCAyNDcgMTc1KSIvPg0KPC9zdmc+DQo=",
+        },
+        de: {
+          name: "Deutsch",
+          flag: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDUgMyI+DQo8cGF0aCBkPSJtMCwwaDV2M2gtNXoiLz4NCjxwYXRoIGZpbGw9IiNEMDAiIGQ9Im0wLDFoNXYyaC01eiIvPg0KPHBhdGggZmlsbD0iI0ZGQ0UwMCIgZD0ibTAsMmg1djFoLTV6Ii8+DQo8L3N2Zz4NCg==",
+        },
+      };
+
+      // Initialize language
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set default language or get from localStorage
+        const currentLang = localStorage.getItem("language") || "en";
+        document.documentElement.lang = currentLang;
+        updateContent(currentLang);
+        updateLanguageSelector(currentLang);
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+          const dropdown = document.querySelector(".language-dropdown-content");
+          const trigger = document.querySelector(".language-selector-trigger");
+
+          if (
+            dropdown &&
+            !event.target.closest(".language-dropdown") &&
+            dropdown.classList.contains("show")
+          ) {
+            dropdown.classList.remove("show");
+          }
+        });
+      });
+
+      // Function to update content based on selected language
+      function updateContent(lang) {
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.getAttribute("data-i18n");
+          if (translations[lang] && translations[lang][key]) {
+            element.innerHTML = translations[lang][key];
+          }
+        });
+        localStorage.setItem("language", lang);
+      }
+
+      // Function to update the language selector UI
+      function updateLanguageSelector(lang) {
+        const currentFlag = document.getElementById("current-language-flag");
+        const currentName = document.getElementById("current-language-name");
+
+        if (currentFlag && currentName) {
+          currentFlag.src = languages[lang].flag;
+          currentName.textContent = languages[lang].name;
+        }
+
+        // Update active state in dropdown
+        document.querySelectorAll(".language-option").forEach((option) => {
+          if (option.getAttribute("data-lang") === lang) {
+            option.classList.add("active");
+          } else {
+            option.classList.remove("active");
+          }
+        });
+      }
+
+      // Function to toggle dropdown
+      function toggleLanguageDropdown() {
+        const dropdown = document.querySelector(".language-dropdown-content");
+        dropdown.classList.toggle("show");
+      }
+
+      // Function to change language
+      function changeLanguage(lang) {
+        document.documentElement.lang = lang;
+        updateContent(lang);
+        updateLanguageSelector(lang);
+
+        // Hide dropdown
+        const dropdown = document.querySelector(".language-dropdown-content");
+        dropdown.classList.remove("show");
+      }
+    </script>
   </head>
   <body class="flex flex-col min-h-screen">
     <header
@@ -121,7 +305,66 @@
           <span class="text-xl font-bold">tournal</span>
         </div>
         <nav class="flex gap-4 ml-auto sm:gap-6">
-          <a href="#discord" class="text-sm font-medium hover:underline">
+          <!-- Language Selector Dropdown -->
+          <div class="language-dropdown">
+            <button
+              class="language-selector-trigger flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors focus:outline-none"
+              onclick="toggleLanguageDropdown()"
+            >
+              <img
+                id="current-language-flag"
+                src="/placeholder.svg"
+                alt=""
+                class="flag-icon"
+              />
+              <span id="current-language-name"></span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-4 h-4"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <div class="language-dropdown-content">
+              <div
+                class="language-option"
+                data-lang="en"
+                onclick="changeLanguage('en')"
+              >
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjM1IDY1MCIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KPGRlZnM+DQo8ZyBpZD0idW5pb24iPg0KPHVzZSB5PSItLjIxNiIgeGxpbms6aHJlZj0iI3g0Ii8+DQo8dXNlIHhsaW5rOmhyZWY9IiN4NCIvPg0KPHVzZSB5PSIuMjE2IiB4bGluazpocmVmPSIjczYiLz4NCjwvZz4NCjxnIGlkPSJ4NCI+DQo8dXNlIHhsaW5rOmhyZWY9IiNzNiIvPg0KPHVzZSB5PSIuMDU0IiB4bGluazpocmVmPSIjczUiLz4NCjx1c2UgeT0iLjEwOCIgeGxpbms6aHJlZj0iI3M2Ii8+DQo8dXNlIHk9Ii4xNjIiIHhsaW5rOmhyZWY9IiNzNSIvPg0KPC9nPg0KPGcgaWQ9InM1Ij4NCjx1c2UgeD0iLS4yNTIiIHhsaW5rOmhyZWY9IiNzdGFyIi8+DQo8dXNlIHg9Ii0uMTI2IiB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4PSIuMTI2IiB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4PSIuMjUyIiB4bGluazpocmVmPSIjc3RhciIvPg0KPC9nPg0KPGcgaWQ9InM2Ij4NCjx1c2UgeD0iLS4wNjMiIHhsaW5rOmhyZWY9IiNzNSIvPg0KPHVzZSB4PSIuMzE1IiB4bGluazpocmVmPSIjc3RhciIvPg0KPC9nPg0KPGcgaWQ9InN0YXIiPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0ibWF0cml4KC0uODA5MDIgLS41ODc3OSAuNTg3NzkgLS44MDkwMiAwIDApIi8+DQo8dXNlIHhsaW5rOmhyZWY9IiNwdCIgdHJhbnNmb3JtPSJtYXRyaXgoLjMwOTAyIC0uOTUxMDYgLjk1MTA2IC4zMDkwMiAwIDApIi8+DQo8dXNlIHhsaW5rOmhyZWY9IiNwdCIvPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0icm90YXRlKDcyKSIvPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0icm90YXRlKDE0NCkiLz4NCjwvZz4NCjxwYXRoIGZpbGw9IiNmZmYiIGlkPSJwdCIgZD0iTS0uMTYyNSwwIDAtLjUgLjE2MjUsMHoiIHRyYW5zZm9ybT0ic2NhbGUoLjA2MTYpIi8+DQo8cGF0aCBmaWxsPSIjYmYwYTMwIiBpZD0ic3RyaXBlIiBkPSJtMCwwaDEyMzV2NTBoLTEyMzV6Ii8+DQo8L2RlZnM+DQo8cGF0aCBmaWxsPSIjZmZmIiBkPSJtMCwwaDEyMzV2NjUwaC0xMjM1eiIvPg0KPHVzZSB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8dXNlIHk9IjEwMCIgeGxpbms6aHJlZj0iI3N0cmlwZSIvPg0KPHVzZSB5PSIyMDAiIHhsaW5rOmhyZWY9IiNzdHJpcGUiLz4NCjx1c2UgeT0iMzAwIiB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8dXNlIHk9IjQwMCIgeGxpbms6aHJlZj0iI3N0cmlwZSIvPg0KPHVzZSB5PSI1MDAiIHhsaW5rOmhyZWY9IiNzdHJpcGUiLz4NCjx1c2UgeT0iNjAwIiB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8cGF0aCBmaWxsPSIjMDAyODY4IiBkPSJtMCwwaDQ5NHYzNTBoLTQ5NHoiLz4NCjx1c2UgeGxpbms6aHJlZj0iI3VuaW9uIiB0cmFuc2Zvcm09Im1hdHJpeCg2NTAgMCAwIDY1MCAyNDcgMTc1KSIvPg0KPC9zdmc+DQo="
+                  alt="English"
+                  class="flag-icon"
+                />
+                <span data-i18n="english">English</span>
+              </div>
+              <div
+                class="language-option"
+                data-lang="de"
+                onclick="changeLanguage('de')"
+              >
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDUgMyI+DQo8cGF0aCBkPSJtMCwwaDV2M2gtNXoiLz4NCjxwYXRoIGZpbGw9IiNEMDAiIGQ9Im0wLDFoNXYyaC01eiIvPg0KPHBhdGggZmlsbD0iI0ZGQ0UwMCIgZD0ibTAsMmg1djFoLTV6Ii8+DQo8L3N2Zz4NCg=="
+                  alt="Deutsch"
+                  class="flag-icon"
+                />
+                <span data-i18n="german">German</span>
+              </div>
+            </div>
+          </div>
+          <a
+            href="#discord"
+            class="text-sm font-medium hover:underline"
+            data-i18n="joinDiscord"
+          >
             Join Discord
           </a>
         </nav>
@@ -136,11 +379,12 @@
           <h1
             class="font-heading text-3xl font-bold leading-[1.1] sm:text-4xl md:text-5xl"
           >
-            Create & Manage Tournaments
-            <span class="text-primary"> With Ease</span>
+            <span data-i18n="createManage">Create & Manage Tournaments</span>
+            <span class="text-primary" data-i18n="withEase"> with Ease</span>
           </h1>
           <p
             class="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8"
+            data-i18n="appDescription"
           >
             The mobile app for organizing and managing tournaments. Coming soon
             to iOS and Android.
@@ -150,7 +394,7 @@
               href="#discord"
               class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md shadow bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring h-11"
             >
-              Join Our Community
+              <span data-i18n="joinCommunity">Join Our Community</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -208,12 +452,18 @@
                   </svg>
                 </div>
               </div>
-              <h3 class="text-2xl font-semibold tracking-tight">
+              <h3
+                class="text-2xl font-semibold tracking-tight"
+                data-i18n="tournamentCreation"
+              >
                 Tournament Creation
               </h3>
             </div>
             <div class="p-6 pt-0">
-              <p class="text-sm text-muted-foreground">
+              <p
+                class="text-sm text-muted-foreground"
+                data-i18n="tournamentCreationDesc"
+              >
                 Create tournaments with round-robin or league formats in
                 minutes.
               </p>
@@ -247,12 +497,18 @@
                   </svg>
                 </div>
               </div>
-              <h3 class="text-2xl font-semibold tracking-tight">
+              <h3
+                class="text-2xl font-semibold tracking-tight"
+                data-i18n="teamManagement"
+              >
                 Team Management
               </h3>
             </div>
             <div class="p-6 pt-0">
-              <p class="text-sm text-muted-foreground">
+              <p
+                class="text-sm text-muted-foreground"
+                data-i18n="teamManagementDesc"
+              >
                 Easily manage participants, teams, and registrations with
                 automated tools.
               </p>
@@ -293,10 +549,18 @@
                   </svg>
                 </div>
               </div>
-              <h3 class="text-2xl font-semibold tracking-tight">Scheduling</h3>
+              <h3
+                class="text-2xl font-semibold tracking-tight"
+                data-i18n="scheduling"
+              >
+                Scheduling
+              </h3>
             </div>
             <div class="p-6 pt-0">
-              <p class="text-sm text-muted-foreground">
+              <p
+                class="text-sm text-muted-foreground"
+                data-i18n="schedulingDesc"
+              >
                 Automatic or manual scheduling with conflict detection.
               </p>
             </div>
@@ -309,10 +573,11 @@
           <div class="mx-auto max-w-[58rem] text-center">
             <h2
               class="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-4xl"
+              data-i18n="joinOurCommunity"
             >
               Join Our Community
             </h2>
-            <p class="mt-4 text-muted-foreground">
+            <p class="mt-4 text-muted-foreground" data-i18n="communityDesc">
               Connect with other tournament organizers and get exclusive
               updates.
             </p>
@@ -322,6 +587,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md shadow bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring h-11"
+                data-i18n="joinDiscord"
               >
                 Join Discord
               </a>
@@ -336,7 +602,9 @@
         class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row"
       >
         <div class="flex items-center gap-4 text-sm text-muted-foreground">
-          <a href="legal.html" class="hover:underline"> Legal Notice </a>
+          <a href="legal.html" class="hover:underline" data-i18n="legalNotice">
+            Legal Notice
+          </a>
         </div>
       </div>
     </footer>
